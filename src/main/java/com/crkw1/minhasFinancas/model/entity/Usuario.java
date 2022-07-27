@@ -1,26 +1,24 @@
 package com.crkw1.minhasFinancas.model.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
-
-
 @Entity
-@Table(name = "usuario", schema = "financas")
-
+@Table( name = "usuario" , schema = "financas")
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
+
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
     @Column(name = "nome")
@@ -30,18 +28,8 @@ public class Usuario {
     private String email;
 
     @Column(name = "senha")
+    @JsonIgnore
     private String senha;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Usuario usuario = (Usuario) o;
-        return id != null && Objects.equals(id, usuario.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
