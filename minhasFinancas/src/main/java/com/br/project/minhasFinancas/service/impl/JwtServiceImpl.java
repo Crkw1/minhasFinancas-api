@@ -4,11 +4,16 @@ import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.service.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 
+import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+
+
 
 public class JwtServiceImpl implements JwtService {
     @Value("${jwt.expiracao}")
