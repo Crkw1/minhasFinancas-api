@@ -4,6 +4,7 @@ import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.service.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
