@@ -1,12 +1,13 @@
 package com.br.project.minhasFinancas.service;
 
 import com.br.project.minhasFinancas.model.repository.UsuarioRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -14,19 +15,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class UsuarioServiceTest {
 
     @Autowired
-    UsuarioService usuarioService;
+    UsuarioService service;
 
     @Autowired
     UsuarioRepository repository;
 
-    @Test(expected = Test.None.class)
+    @Test
     public void deveValidarEmail() {
-        //cenario
-        repository.deleteAll();
 
-        //ação
-        usuarioService.validarEmail("email@email.com");
+            // cenario
+            repository.deleteAll();
 
+            // acao
+            service.validarEmail("email@email.com");
     }
-
 }
