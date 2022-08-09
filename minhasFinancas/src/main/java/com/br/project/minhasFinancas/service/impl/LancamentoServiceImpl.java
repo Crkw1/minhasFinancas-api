@@ -48,6 +48,11 @@ public class LancamentoServiceImpl implements LancamentoService {
     }
 
     @Override
+    public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
+        return null;
+    }
+
+    /*@Override
     @Transactional(readOnly = true)
     public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
         Example example = Example.of( lancamentoFiltro,
@@ -56,7 +61,7 @@ public class LancamentoServiceImpl implements LancamentoService {
                         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) );
 
         return repository.findAll(example);
-    }
+    }*/
 
     @Override
     public void atualizarStatus(Lancamento lancamento, StatusLancamento status) {
