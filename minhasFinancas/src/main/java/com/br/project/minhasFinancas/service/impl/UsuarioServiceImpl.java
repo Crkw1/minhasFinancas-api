@@ -1,11 +1,13 @@
 package com.br.project.minhasFinancas.service.impl;
 
+import com.br.project.minhasFinancas.exception.ErroAutenticacao;
 import com.br.project.minhasFinancas.exception.RegraNegocioException;
 import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.model.repository.UsuarioRepository;
 import com.br.project.minhasFinancas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,12 +25,22 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario autenticar(String email, String senha) {
-        return null;
+       Optional<Usuario> usuario = repository.findByEmail(email);
+
+       if (!usuario.isPresent()) {
+           throw new ErroAutenticacao("Usuário não encontrado.");
+       }
+       if (usuario.get().getSenha().equals(senha)) {
+           throw new ErroAutenticacao("Senha incorreta.");
+       }
+        return usuario.get();
     }
 
     @Override
+    @Transactional
     public Usuario salvarUsuario(Usuario usuario) {
-        return null;
+        validarEmail(usuario.getEmail());
+        return repository.save(usuario);
     }
 
     @Override
