@@ -1,16 +1,13 @@
 package com.br.project.minhasFinancas.service;
 
-import com.br.project.minhasFinancas.exception.RegraNegocioException;
 import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.model.repository.UsuarioRepository;
 import com.br.project.minhasFinancas.service.impl.UsuarioServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -81,8 +78,6 @@ public class UsuarioServiceTest {
 
         // Primeira ação de teste
         // service.validarEmail("email@email.com");
-
-
 
     }
 
