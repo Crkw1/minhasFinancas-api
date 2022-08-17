@@ -83,8 +83,6 @@ public class UsuarioRepositoryTest {
 
     @Test
     public void deveRetornarVazioAoBuscarUsuarioPorEmailQuandoNaoExisteNaBase() {
-        // cenario
-
 
         //verificação
         Optional<Usuario> result = repository.findByEmail("usuario@email.com");
