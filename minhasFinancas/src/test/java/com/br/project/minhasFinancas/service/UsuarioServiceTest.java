@@ -1,5 +1,6 @@
 package com.br.project.minhasFinancas.service;
 
+import com.br.project.minhasFinancas.exception.ErroAutenticacao;
 import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.model.repository.UsuarioRepository;
 import com.br.project.minhasFinancas.service.impl.UsuarioServiceImpl;
@@ -48,6 +49,17 @@ public class UsuarioServiceTest {
 
         // verificação
         Assertions.assertThat(result).isNotNull();
+
+    }
+
+    @Test
+    public void deveLancarErroQuandoNaoEncontrarUsuarioCadastradoComOEmailInformado() {
+
+        // cenario
+        Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+
+        //ação
+        service.autenticar("email@email.com", "senha");
 
     }
 
