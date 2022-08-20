@@ -6,7 +6,6 @@ import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.model.repository.UsuarioRepository;
 import com.br.project.minhasFinancas.service.impl.UsuarioServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -35,6 +34,7 @@ public class UsuarioServiceTest {
         Mockito.doNothing().when(service).validarEmail(Mockito.anyString());
         Usuario usuario = Usuario
                 .builder()
+                .id(1l)
                 .nome("nome")
                 .email("email@email.com")
                 .senha("senha")
@@ -50,6 +50,22 @@ public class UsuarioServiceTest {
         Assertions.assertThat(usuarioSalvo.getNome()).isEqualTo("nome");
         Assertions.assertThat(usuarioSalvo.getEmail()).isEqualTo("email@email.com");
         Assertions.assertThat(usuarioSalvo.getSenha()).isEqualTo("senha");
+
+    }
+    @Test
+    public void naoDeveSalvarUmUsuarioComEmailJaCadastrado() {
+        //cenario
+        String email = "email@email.com";
+        Usuario usuario = Usuario.builder()
+                .email(email)
+                .build();
+        Mockito.doThrow(RegraNegocioException.class).when(service).validarEmail(email);
+
+        //ação
+        service.salvarUsuario(usuario);
+
+        //verificação
+        Mockito.verify(repository, Mockito.never() ).save(usuario);
 
 
     }
@@ -119,7 +135,6 @@ public class UsuarioServiceTest {
 
             /* Primeiro cenario usando test
             repository.deleteAll(); */
-
 
             // ação
             service.validarEmail("email@email.com");
