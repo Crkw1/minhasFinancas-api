@@ -18,7 +18,9 @@ public class UsuarioController {
     public UsuarioController ( UsuarioService service) {
         this.service = service;
     }
-    @PostMapping()
+
+
+    @PostMapping("/autenticar")
     public ResponseEntity autenticar(@RequestBody UsuarioDTO dto) {
         try {
             Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
