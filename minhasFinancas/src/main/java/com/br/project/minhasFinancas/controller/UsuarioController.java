@@ -1,6 +1,7 @@
 package com.br.project.minhasFinancas.controller;
 
 import com.br.project.minhasFinancas.dto.UsuarioDTO;
+import com.br.project.minhasFinancas.exception.ErroAutenticacao;
 import com.br.project.minhasFinancas.exception.RegraNegocioException;
 import com.br.project.minhasFinancas.model.entity.Usuario;
 import com.br.project.minhasFinancas.service.UsuarioService;
@@ -17,6 +18,16 @@ public class UsuarioController {
     public UsuarioController ( UsuarioService service) {
         this.service = service;
     }
+    @PostMapping()
+    public ResponseEntity autenticar(@RequestBody UsuarioDTO dto) {
+        try {
+            Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
+            return ResponseEntity.ok(usuarioAutenticado);
+        } catch (ErroAutenticacao e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity salvar(@RequestBody UsuarioDTO dto) {
