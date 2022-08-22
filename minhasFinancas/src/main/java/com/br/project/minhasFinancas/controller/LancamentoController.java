@@ -87,7 +87,7 @@ public class LancamentoController {
     private Lancamento converter(LancamentoDTO dto) {
         Lancamento lancamento = new Lancamento();
         lancamento.setId(dto.getId());
-        lancamento.setDescricao(dto.getDescrisao());
+        lancamento.setDescricao(dto.getDescricao());
         lancamento.setMes(dto.getMes());
         lancamento.setAno(dto.getAno());
         lancamento.setValor(dto.getValor());
