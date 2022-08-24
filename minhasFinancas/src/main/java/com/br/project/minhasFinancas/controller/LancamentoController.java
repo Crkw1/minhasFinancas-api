@@ -1,5 +1,6 @@
 package com.br.project.minhasFinancas.controller;
 
+import com.br.project.minhasFinancas.dto.AtualizaStatusDTO;
 import com.br.project.minhasFinancas.dto.LancamentoDTO;
 import com.br.project.minhasFinancas.exception.RegraNegocioException;
 import com.br.project.minhasFinancas.model.entity.Lancamento;
@@ -36,6 +37,14 @@ public class LancamentoController {
         }
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity obterLancamento( @PathVariable("id") Long id ) {
+        return service.obterPorId(id)
+                .map( lancamento -> new ResponseEntity(converter(lancamento), HttpStatus.OK) )
+                .orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND) );
+    }
+
+    @GetMapping
     public ResponseEntity buscar(
             @RequestParam(value = "descricao", required = false) String descricao,
             @RequestParam(value = "mes", required = false) Integer mes,
@@ -57,8 +66,7 @@ public class LancamentoController {
 
     }
 
-
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseEntity deletar(@PathVariable("id") Long id) {
         return service.obterPorId(id).map( entidade -> {
             service.deletar(entidade);
@@ -67,7 +75,7 @@ public class LancamentoController {
                 new ResponseEntity("Lançamento não encontrado na base de dados.",HttpStatus.BAD_REQUEST));
     }
 
-    @PutMapping("{id}")
+    @PutMapping
     public ResponseEntity atualizar(@PathVariable Long id, @RequestBody LancamentoDTO dto) {
            return service.obterPorId(id).map( entity -> {
                try {
@@ -81,6 +89,41 @@ public class LancamentoController {
                }
         }).orElseGet(() ->
                    new ResponseEntity("Lançamento não encontrado na base de dados.",HttpStatus.BAD_REQUEST));
+
+    }
+
+    @PutMapping("{id}/atualiza-status")
+    public ResponseEntity atualizarStatus( @PathVariable("id") Long id , @RequestBody AtualizaStatusDTO dto ) {
+        return service.obterPorId(id).map( entity -> {
+            StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+
+            if(statusSelecionado == null) {
+                return ResponseEntity.badRequest().body("Não foi possível atualizar o status do lançamento, envie um status válido.");
+            }
+
+            try {
+                entity.setStatus(statusSelecionado);
+                service.atualizar(entity);
+                return ResponseEntity.ok(entity);
+            }catch (RegraNegocioException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+
+        }).orElseGet( () ->
+                new ResponseEntity("Lancamento não encontrado na base de Dados.", HttpStatus.BAD_REQUEST) );
+    }
+
+    private LancamentoDTO converter(Lancamento lancamento) {
+        return LancamentoDTO.builder()
+                .id(lancamento.getId())
+                .descricao(lancamento.getDescricao())
+                .valor(lancamento.getValor())
+                .mes(lancamento.getMes())
+                .ano(lancamento.getAno())
+                .status(lancamento.getStatus().name())
+                .tipo(lancamento.getTipo().name())
+                .usuario(lancamento.getUsuario().getId())
+                .build();
 
     }
 
