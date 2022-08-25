@@ -56,7 +56,7 @@ public class LancamentoController {
         lancamentoFiltro.setAno(ano);
 
        Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
-       if (usuario.isPresent()) {
+       if (!usuario.isPresent()) {
            return ResponseEntity.badRequest().body("Não foi possível realizar a consulta. Usuário não encontrado");
        } else {
            lancamentoFiltro.setUsuario(usuario.get());
@@ -89,7 +89,6 @@ public class LancamentoController {
                }
         }).orElseGet(() ->
                    new ResponseEntity("Lançamento não encontrado na base de dados.",HttpStatus.BAD_REQUEST));
-
     }
 
     @PutMapping("{id}/atualiza-status")
