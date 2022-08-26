@@ -62,7 +62,8 @@ public class UsuarioServiceTest {
         Mockito.doThrow(RegraNegocioException.class).when(service).validarEmail(email);
 
         //ação
-        service.salvarUsuario(usuario);
+        org.junit.jupiter.api.Assertions.assertThrows(RegraNegocioException.class,
+                () -> service.salvarUsuario(usuario));
 
         //verificação
         Mockito.verify(repository, Mockito.never() ).save(usuario);
