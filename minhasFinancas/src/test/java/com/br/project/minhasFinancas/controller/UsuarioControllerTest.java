@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 public class UsuarioControllerTest {
 
     static final String API = "/api/usuarios";
-    static final MediaType json =  MediaType.APPLICATION_JSON;
+    static final MediaType JSON =  MediaType.APPLICATION_JSON;
 
     @Autowired
     MockMvc mvc;
@@ -39,31 +39,36 @@ public class UsuarioControllerTest {
     @MockBean
     UsuarioService service;
 
-    @Mock
+    @MockBean
     LancamentoService lancamentoService;
 
     @Test
     public void deveAutenticarUmUsuario() throws Exception {
 
-        String email = "usuario@email";
+        //cenario
+        String email = "usuario@email.com";
         String senha = "123";
 
-        UsuarioDTO dto = UsuarioDTO.builder().email("usuario@email.com").senha("123").build();
+        UsuarioDTO dto = UsuarioDTO.builder().email(email).senha(senha).build();
         Usuario usuario = Usuario.builder().id(1l).email(email).senha(senha).build();
-
-        Mockito.when(service.autenticar(email, senha)).thenReturn(usuario);
-
+        Mockito.when( service.autenticar(email, senha) ).thenReturn(usuario);
         String json = new ObjectMapper().writeValueAsString(dto);
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(API.concat("/autenticar"))
-                .accept(json).contentType(json).content(json);
+        //execucao e verificacao
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post( API.concat("/autenticar") )
+                .accept( JSON )
+                .contentType( JSON )
+                .content(json);
 
-        mvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk() )
-                .andExpect(MockMvcResultMatchers.jsonPath("id").value(usuario.getId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("nome").value(usuario.getNome()))
-                .andExpect(MockMvcResultMatchers.jsonPath("email").value(usuario.getEmail()))
-                ;
 
+        mvc.perform(request)
+                .andExpect( MockMvcResultMatchers.status().isOk()  )
+                .andExpect( MockMvcResultMatchers.jsonPath("id").value(usuario.getId())  )
+                .andExpect( MockMvcResultMatchers.jsonPath("nome").value(usuario.getNome())  )
+                .andExpect( MockMvcResultMatchers.jsonPath("email").value(usuario.getEmail())  )
+
+        ;
 
     }
 
