@@ -171,7 +171,6 @@ public class LancamentoServiceTest {
 
         assertThat(resultado.isPresent()).isFalse();
 
-
     }
 
     @Test
