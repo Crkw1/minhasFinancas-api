@@ -98,5 +98,4 @@ public class UsuarioRepositoryTest {
                 .senha("senha")
                 .build();
     }
-
 }
