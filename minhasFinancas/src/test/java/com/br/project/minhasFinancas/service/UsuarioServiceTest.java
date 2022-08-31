@@ -27,7 +27,6 @@ public class UsuarioServiceTest {
     @MockBean
     UsuarioRepository repository;
 
-
     @Test
     public void deveSalvarUmUsuario() {
         //cenario
@@ -67,7 +66,6 @@ public class UsuarioServiceTest {
 
         //verificação
         Mockito.verify(repository, Mockito.never() ).save(usuario);
-
 
     }
 
@@ -125,7 +123,6 @@ public class UsuarioServiceTest {
         Throwable exception = Assertions.catchThrowable( () -> service.autenticar("email@email.com", "123"));
         Assertions.assertThat(exception).isInstanceOf(ErroAutenticacao.class).hasMessage("Senha incorreta.");
 
-
     }
 
     @Test
@@ -149,5 +146,4 @@ public class UsuarioServiceTest {
         Throwable exception = Assertions.catchThrowable( () -> service.validarEmail("email@email.com"));
         Assertions.assertThat(exception).isInstanceOf(RegraNegocioException.class).hasMessage("Já existe um usuário cadastrado com este email.");
     }
-
 }
