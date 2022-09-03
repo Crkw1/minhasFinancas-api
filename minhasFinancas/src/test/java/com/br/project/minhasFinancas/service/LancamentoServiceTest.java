@@ -36,15 +36,19 @@ public class LancamentoServiceTest {
 
     @Test
     public void deveSalvarUmLancamento() {
+
+       //cenario
         Lancamento lancamentoSalvar = LancamentoRepositoryTest.criarLancamento();
         Mockito.doNothing().when(service).validar(lancamentoSalvar);
 
+        //ação
         Lancamento lancamentoSalvo = LancamentoRepositoryTest.criarLancamento();
         lancamentoSalvo.setId(1l);
         lancamentoSalvo.setStatus(StatusLancamento.EFETIVADO);
         Mockito.when(repository.save(lancamentoSalvar)).thenReturn(lancamentoSalvo);
         Lancamento lancamento = service.salvar(lancamentoSalvar);
 
+        //verificação
         assertThat(lancamento.getId() ).isEqualTo(lancamentoSalvo.getId());
         assertThat(lancamento.getStatus() ).isEqualTo(StatusLancamento.EFETIVADO);
 
