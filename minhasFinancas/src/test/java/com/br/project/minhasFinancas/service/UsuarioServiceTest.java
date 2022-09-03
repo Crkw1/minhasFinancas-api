@@ -101,6 +101,8 @@ public class UsuarioServiceTest {
         // service.autenticar("email@email.com", "senha");
 
         Throwable exception = Assertions.catchThrowable( () -> service.autenticar("email@email.com", "senha"));
+
+        //verificação
         Assertions.assertThat(exception).isInstanceOf(ErroAutenticacao.class).hasMessage("Usuário não encontrado.");
 
     }
@@ -119,7 +121,6 @@ public class UsuarioServiceTest {
         //ação
         // Primeira ideia to teste
         // service.autenticar("email@email.com", "123" );
-
         Throwable exception = Assertions.catchThrowable( () -> service.autenticar("email@email.com", "123"));
         Assertions.assertThat(exception).isInstanceOf(ErroAutenticacao.class).hasMessage("Senha incorreta.");
 
