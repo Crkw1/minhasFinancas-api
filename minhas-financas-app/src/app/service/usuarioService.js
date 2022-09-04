@@ -43,7 +43,6 @@ class UsuarioService extends ApiService {
             throw new ErroValidacao(erros);
         }
     }
-
 }
 
 export default UsuarioService;

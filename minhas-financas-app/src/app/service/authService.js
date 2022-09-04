@@ -42,5 +42,4 @@ export default class AuthService {
         AuthService.logar(usuario, token)
         return usuario;
     }
-
 }
